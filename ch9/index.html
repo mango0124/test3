@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<title>ch9-2使用CSS製作多層級選單(2)</title>
+<meta charset="utf-8">
+<style>
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none; 
+}
+.menu {
+    font-family: '標楷體';
+    font-size: 20px;
+}
+.menu > li { /*子選擇器，只有第一層*/
+    float: left;
+}
+.menu li {
+    position: relative;
+    padding: 0px;
+    border: #1e40af 2px solid; /* [增修] 框線改為 2px 實線，並採用搭配按鈕背景之加深藍色系 */
+    border-radius: 5%; /* [增修] 設定選單項目具有 5% 圓角 */
+    min-width: 120px;
+}
+.menu ul {
+    position: absolute;
+    z-index: 10;
+    top: 105%; /* [增修] 子選單在對應上層選單的下方 5% 處開始顯示 (100% + 5%) */
+    left: 5%;  /* [增修] 子選單在對應上層選單的右方 5% 處開始顯示 */
+    display:none; /*預設ul不顯示*/
+}
+.menu ul::before { /* [增修] 建立透明緩衝區填補 5% 的縫隙，避免滑鼠移往子選單時選單縮回 */
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    height: 15px;
+    background: transparent;
+}
+.menu ul li> ul {/*定義上一層ul li與下一層ul的距離*/
+    z-index: 20;
+    top: 5%;   /* [維持] 第三層子選單於上層選單往下 5% 處開始顯示 */
+    left: 95%; /* [維持] 第三層子選單於上層選單往右 95% 處展開，避免遮擋第二層選項 */
+}
+.menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    background-image: url(img/btn1.png);
+    background-size: cover;
+    color: black;
+    border-radius: 5%; /* [增修] 讓超連結背景圖片也同步套用 5% 圓角，避免圖片直角超出框線 */
+}
+.menu a:hover {
+    background-image: url(img/btn2.png);
+    background-size: cover;
+    color: white;
+}
+.menu li:hover > ul {
+    display: block; /*移動到li，li下一層的ul才顯示*/
+}
+</style>
+</head>
+<body>
+<ul class="menu">
+    <li><a href="#">台北景點</a>
+        <ul>
+            <li><a href="#">台北101</a></li>
+            <li><a href="#">迪化街</a></li>
+            <li><a href="#">士林夜市</a></li>
+        </ul>
+    </li>
+    <li><a href="#">澎湖景點</a>
+        <ul>
+            <li><a href="#">跨海大橋</a></li>
+            <li><a href="#">沙灘</a></li>
+            <li><a href="#">觀音亭</a></li>
+        </ul>
+    </li>
+    <li><a href="#">台南景點</a>
+        <ul>
+            <li><a href="#">赤崁樓</a></li>
+            <li><a href="#">台南孔廟</a></li>
+            <li><a href="#">台南小吃>></a>
+                <ul>
+                    <li><a href="#">八寶冰</a></li>
+                    <li><a href="#">蚵仔煎</a></li>
+                    <li><a href="#">米糕</a></li>
+                    <li><a href="#">牛肉湯</a></li>
+                    <li><a href="#">肉燥飯</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>
